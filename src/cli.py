@@ -1,5 +1,5 @@
 import click
-from azure_sdk import authenticate, get_virtual_machines, get_networks
+from azure_sdk import authenticate, get_virtual_machines, get_networks, origins, names, display_names
 
 
 
@@ -24,6 +24,14 @@ def retrieve_data():
     click.echo("\nNetworks:")
     for network in networks:
         click.echo(network)
+
+    click.echo("\nOperations:-------------------")
+    for origin in origins:
+        click.echo(origin)
+    for name in names:
+        click.echo(name)
+    for display_name in display_names:
+        click.echo(display_name)
 
 @click.option('--scan', default=1, help='Provide a scan of resources')
 def scancom(scan, summary):

@@ -35,6 +35,14 @@ def get_virtual_machines(compute_client):
     vm_list = compute_client.virtual_machines.list_all()
     vm_names = [vm.name for vm in vm_list]
 
+    ## grab compute operations using the operations model in the compute client
+    compute_ops = compute_client.operations.list()
+    ## iterate over the operations and print out the name and display name
+    origins, names, display_names = [op.origin for op in compute_ops], [op.name for op in compute_ops], [op.display_name for op in compute_ops]
+
+    ssh_keys = compute_client.ssh_public_keys.list_by_subscription()
+    ssh_key_names = [ssh_key.name for ssh_key in ssh_keys]
+
     return vm_names
     return roles_names
 def get_networks(network_client):
@@ -57,6 +65,11 @@ compute_client, network_client = authenticate()
 vms = get_virtual_machines(compute_client)
 networks = get_networks(network_client)
 roles = get_virtual_machines(compute_client)
+origins = get_virtual_machines(compute_client)
+names = get_virtual_machines(compute_client)
+display_names = get_virtual_machines(compute_client)
+ssh_key_names = get_virtual_machines(compute_client)
+
 
 # Print the retrieved data
 print("Virtual Machines:")
@@ -66,6 +79,11 @@ for vm in vms:
 print("\nNetworks:")
 for network in networks:
     print(network)
-print("Roles being utilized")
+
+print("\nOperations:-------------------")
+print(f'{origins}, {names}, {display_names}')
+print(f'{ssh_key_names}')
+
+print("---------Roles being utilized----------")
 for role in roles:
     print(role)
